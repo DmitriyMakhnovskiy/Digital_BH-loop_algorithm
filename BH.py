@@ -276,10 +276,30 @@ def run_code():
         return cumsum[window_size - 1:] / window_size
 
     # Smoothing the data using moving averages
+    # After smoothing, arrays may have different dimensions
     B_forward_smoothed = moving_average(B_forward, window_size)
+    l0 = len(B_forward_smoothed)
     H_forward_smoothed = moving_average(H_forward, window_size)
+    l1 = len(H_forward_smoothed)
     B_reverse_smoothed = moving_average(B_reverse, window_size)
+    l2 = len(B_reverse_smoothed)
     H_reverse_smoothed = moving_average(H_reverse, window_size)
+    l3 = len(H_reverse_smoothed)
+
+    min_length = min(l0, l1, l2, l3)  # minimum dimension of the arrays after smoothing
+
+    # Adjusting the dimension of the arrays after smoothing
+    if l0 > min_length:
+        B_forward_smoothed = B_forward_smoothed[:-(l0 - min_length)]
+
+    if l1 > min_length:
+        H_forward_smoothed = H_forward_smoothed[:-(l1 - min_length)]
+
+    if l2 > min_length:
+        H_reverse_smoothed = H_reverse_smoothed[:-(l2 - min_length)]
+
+    if l3 > min_length:
+        B_reverse_smoothed = B_reverse_smoothed[:-(l3 - min_length)]
 
     # Creating the graph of smoothed curves
     plt.figure(figsize=(10, 6))
