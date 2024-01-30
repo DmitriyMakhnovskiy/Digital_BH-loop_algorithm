@@ -1,7 +1,7 @@
 #
 # Digital BH-loop algorithm
 # Project repository on GitHub: https://github.com/DYK-Team/Digital_BH-loop_algorithm
-# 15/10/2023
+# created 15/10/2023; updated 30.01.2024
 #
 # Authors:
 # Ekaterina Nefedova, Dr. Mark Nemirovich, Dr. Nikolay Udanov, and Prof. Larissa Panina
