@@ -1,19 +1,19 @@
 
-File name and directory E:\Dropbox\MISiS\Digital BH-loop\Experimental data\Test1.csv
+File name and directory E:\Dropbox\MISiS\Digital BH-loop\Experimental data\Test3.csv
 
 Time increment = 1e-08 s
-Fitted sinusoid amplitude = 33.84351753934818 (your units)
-Fitted sinusoid frequency = 400010.06430491386 Hz
-Fitted sinusoid phase = 0.9511785713087304 rads
-Fitted sinusoid phase = 54.49851769927367 degrees
+Fitted sinusoid amplitude = 33.69939654674529 (your units)
+Fitted sinusoid frequency = 249989.33215484532 Hz
+Fitted sinusoid phase = 0.297490074474966 rads
+Fitted sinusoid phase = 17.04492571444809 degrees
 
 B-scale = 1.0 
 H-scale = 1.0 
 
-Reference time t1 = 1.4965004184415344e-06 s 
-Reference time t2 = 2.7464689682799884e-06 s 
-Reference time t3 = 3.996437518118443e-06 s 
+Reference time t1 = 2.810731874315758e-06 s 
+Reference time t2 = 4.810817220718845e-06 s 
+Reference time t3 = 6.810902567121931e-06 s 
 
-Reference index 1 = 149 
-Reference index 2 = 274 
-Reference index 3 = 399 
+Reference index 1 = 281 
+Reference index 2 = 481 
+Reference index 3 = 681 
