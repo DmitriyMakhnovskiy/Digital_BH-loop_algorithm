@@ -1,7 +1,7 @@
 #
 # Digital BH-loop algorithm
 # Project repository on GitHub: https://github.com/DYK-Team/Digital_BH-loop_algorithm
-# created 15/10/2023; updated 30.01.2024; updated 02.02.2024; updated 09.02.2024; updated 12.02.2024
+# created 15/10/2023; updated 30.01.2024; updated 02.02.2024; updated 08.02.2024
 #
 # Authors:
 # Ekaterina Nefedova, Dr. Mark Nemirovich, Dr. Nikolay Udanov, and Prof. Larissa Panina
@@ -22,10 +22,6 @@ pi = np.pi  # pi-constant 3.1415....
 default_B_scale = 1.0  # This scale depends on the measurement units (V or mV) and the wire length and diameter
 default_H_scale = 1.0  # This scale depends on the measurement units (V or mV) and the wire length and diameter
 default_window_size = 3  # Moving Average Window. You can change from the GUI window.
-# Adjustable offsets (+/-) to compensate for non-zero ground levels when integrating for the forward (groundf)
-# or reverse (groundr) branches of the hysteresis loop
-default_groundf = 0.0
-default_groundr = 0.0
 
 # Function to run the code with the entered parameters
 def run_code():
@@ -34,8 +30,6 @@ def run_code():
     time_increment = float(time_increment_entry.get())  # Enter the time increment (s) to the GUI window
     B_scale = float(B_scale_entry.get())
     H_scale = float(H_scale_entry.get())
-    groundf = float(groundf_entry.get())
-    groundr = float(groundr_entry.get())
     window_size = int(window_size_entry.get())
 
     # Full file name, including the directory path and the csv extension
@@ -226,11 +220,10 @@ def run_code():
     H_forward = []
     integral_value = 0.0
     for i in range(refindex1, refindex2):
-        H_forward.append(sinusoid_fit[i])  # Values taken from the fitting sinusoid
-        # H_forward.append(sin_values[i])  # Experimental values (old version)
-        for j in range(refindex1, i):
-            integral_value += 0.5 * (response_values[j] + response_values[j + 1]) * time_increment  # Trapezoid method
-            integral_value += - groundf * (j - refindex1 + 1) * time_increment  # ground offset compensation
+        H_forward.append(sinusoid_fit[i])  # values taken from the fitting sinusoid
+        # H_forward.append(sin_values[i])  # experimental values
+        for i in range(refindex1, i):
+            integral_value += 0.5 * (response_values[i] + response_values[i + 1]) * time_increment  # Trapezoid method
         B_forward.append(integral_value)
 
     # Reverse integration of the voltage response between the reference indexes 2 and 3
@@ -238,11 +231,10 @@ def run_code():
     H_reverse = []
     integral_value = 0.0
     for i in range(refindex2, refindex3):
-        H_reverse.append(sinusoid_fit[i])  # Values taken from the fitting sinusoid
-        # H_reverse.append(sin_values[i])  # Experimental values (old version)
-        for j in range(refindex2, i):
-            integral_value += 0.5 * (response_values[j] + response_values[j + 1]) * time_increment  # Trapezoid method
-            integral_value += - groundr * (j - refindex2 + 1) * time_increment  # ground offset compensation
+        H_reverse.append(sinusoid_fit[i])  # values taken from the fitting sinusoid
+        # H_reverse.append(sin_values[i])  # experimental values
+        for i in range(refindex2, i):
+            integral_value += 0.5 * (response_values[i] + response_values[i + 1]) * time_increment  # Trapezoid method
         B_reverse.append(integral_value)
 
     # Rescaling the magnetic induction B and the field H from the data values
@@ -354,7 +346,7 @@ directory_path_label.pack()
 directory_path_entry = tk.Entry(root)
 directory_path_entry.pack()
 
-name_label = tk.Label(root, text="File Name (w/o extension):")
+name_label = tk.Label(root, text="File Name (without extension):")
 name_label.pack()
 name_entry = tk.Entry(root)
 name_entry.pack()
@@ -376,23 +368,11 @@ H_scale_entry = tk.Entry(root)
 H_scale_entry.insert(0, default_H_scale)  # Default value
 H_scale_entry.pack()
 
-window_size_label = tk.Label(root, text="Moving Aver. Window:")
+window_size_label = tk.Label(root, text="Moving Average Window:")
 window_size_label.pack()
 window_size_entry = tk.Entry(root)
 window_size_entry.insert(0, default_window_size)  # Default value
 window_size_entry.pack()
-
-groundf_label = tk.Label(root, text="Ground offset (forward):")
-groundf_label.pack()
-groundf_entry = tk.Entry(root)
-groundf_entry.insert(0, default_groundf)  # Default value
-groundf_entry.pack()
-
-groundr_label = tk.Label(root, text="Ground offset (reverse):")
-groundr_label.pack()
-groundr_entry = tk.Entry(root)
-groundr_entry.insert(0, default_groundr)  # Default value
-groundr_entry.pack()
 
 # Frame to hold the buttons in one row
 button_frame = tk.Frame(root)
